@@ -61,7 +61,7 @@ public:
 	void DrawCircle( int x,int y,int radius,Color c );
 	void DrawRect(const RectF& rect, Color c)
 	{
-		DrawRect(int(rect.left), int(rect.right), int(rect.top), int(rect.bottom), c);
+		DrawRect(int(rect.left), int(rect.top), int(rect.right), int(rect.bottom), c);
 	}
 	~Graphics();
 private:
