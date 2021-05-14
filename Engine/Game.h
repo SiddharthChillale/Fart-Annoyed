@@ -49,7 +49,11 @@ private:
 	/*  User Variables              */
 	FrameTimer ft;
 	
-	Brick brick;
+	static constexpr int nBricksAcross = 7;
+	static constexpr int nBricksDown = 5;
+
+	static constexpr int nBricks = nBricksAcross*nBricksDown;
+	Brick bricks[nBricksAcross][nBricksDown];
 	Ball ball;
 	Paddle paddle;
 	Sound soundpad;
