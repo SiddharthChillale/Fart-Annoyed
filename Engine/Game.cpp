@@ -25,7 +25,8 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball( Vec2(40.0f, 40.0f), Vec2(10.0f, 10.0f))
+	ball( Vec2(40.0f, 40.0f), Vec2(7.0f, 7.0f)),
+	paddle( Vec2( 30.0f, 500.0f))
 {
 }
 
@@ -40,14 +41,29 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
+	if (wnd.kbd.KeyIsPressed(VK_CONTROL)) {
+		COLLISION_MASK_ENABLED = !COLLISION_MASK_ENABLED;
+	}
+	paddle.Update(wnd.kbd, dt);
+
+	paddle.IsCollidingBall(ball);
 
 	ball.Update(dt);
 	
-
 	
 }
 
 void Game::ComposeFrame()
 {
+	if (COLLISION_MASK_ENABLED) {
+		ball.DrawCollisionMask(gfx);
+
+	}
 	ball.Draw(gfx);
+	
+	paddle.Draw(gfx);
+	if (COLLISION_MASK_ENABLED) {
+		paddle.DrawCollisionMask(gfx);
+
+	}
 }

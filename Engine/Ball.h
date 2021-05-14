@@ -3,6 +3,7 @@
 #include "RectF.h"
 #include "Graphics.h"
 
+
 class Ball {
 private:
 	Vec2 pos;
@@ -13,12 +14,18 @@ private:
 public:
 	Ball() = default;
 	Ball(Vec2& in_pos, Vec2& in_vel);
-	void Draw(Graphics& gfx)const ;
 	void BoundInsideWindow();
+	Vec2 GetCenter()const;
+	RectF GetRect()const;
+	Vec2 GetVelocity()const;
+	
 	void ReboundX();
 	void ReboundY();
 	void Update(float dt);
+	void DrawCollisionMask(Graphics& gfx)const;
+	void Draw(Graphics& gfx)const;
+
+
 	
-	Vec2& GetCenter()const;
 
 };

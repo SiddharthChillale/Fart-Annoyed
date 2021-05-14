@@ -4,6 +4,7 @@
 #include "RectF.h"
 #include "Graphics.h"
 #include "Keyboard.h"
+#include "Ball.h"
 
 class Paddle {
 private:
@@ -17,10 +18,11 @@ public:
 	Paddle() = default;
 	Paddle(const Vec2& in_pos);
 	void BoundInsideWindow();
-	RectF& GetRect()const;
-
-	Vec2& GetCenter()const;
+	RectF GetRect()const;
+	void IsCollidingBall(Ball& ball)const;
+	Vec2 GetCenter()const;
 	void Update(const Keyboard& kbd, float dt);
+	void DrawCollisionMask(Graphics& gfx)const;
 	void Draw(Graphics& gfx)const;
 	
 	

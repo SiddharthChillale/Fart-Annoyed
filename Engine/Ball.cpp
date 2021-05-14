@@ -35,6 +35,7 @@ void Ball::BoundInsideWindow()
 	}
 }
 
+
 void Ball::ReboundX()
 {
 	vel.x = -vel.x;
@@ -52,7 +53,23 @@ void Ball::Update(float dt)
 
 }
 
-Vec2& Ball::GetCenter() const
+void Ball::DrawCollisionMask(Graphics& gfx) const
+{
+	RectF collision_mask = GetRect();
+	gfx.DrawRect(collision_mask, Colors::LightGray);
+}
+
+Vec2 Ball::GetCenter() const
 {
 	return Vec2(pos.x + (width/2), pos.y + (height/2));
+}
+
+RectF Ball::GetRect() const
+{
+	return RectF(pos, Vec2(pos.x + width, pos.y + height));
+}
+
+Vec2 Ball::GetVelocity()const
+{
+	return vel;
 }

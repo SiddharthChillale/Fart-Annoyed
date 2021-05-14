@@ -25,8 +25,9 @@ RectF::RectF(const Vec2& topleft, float width, float height)
 
 }
 
-Vec2& RectF::GetCenter() const
+Vec2 RectF::GetCenter() const
 {
+    
     return Vec2(((left + right) / 2.0f), ((top + bottom) / 2.0f));
 }
 
@@ -42,6 +43,8 @@ float RectF::GetHeight() const
 
 bool RectF::isCollidingWith(const RectF& rect)const
 {
-    
-    return (rect.GetCenter().x - GetCenter().x < rect.GetWidth() || rect.GetCenter().y - GetCenter().y < rect.GetHeight());
+    Vec2 diff_v = rect.GetCenter() - GetCenter();
+
+
+    return (abs(diff_v.x) <= (rect.GetWidth() + GetWidth()) / 2 && abs(diff_v.y) <= (rect.GetHeight() + GetHeight()) / 2);
 }

@@ -25,6 +25,7 @@
 #include "Ball.h"
 #include "Graphics.h"
 #include "FrameTimer.h"
+#include "Paddle.h"
 
 class Game
 {
@@ -46,5 +47,7 @@ private:
 	/*  User Variables              */
 	FrameTimer ft;
 	Ball ball;
+	Paddle paddle;
+	bool COLLISION_MASK_ENABLED = false;
 	/********************************/
 };

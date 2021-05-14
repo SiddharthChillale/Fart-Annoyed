@@ -16,7 +16,7 @@ public:
 	//RectF(const Vec2& center, float halfWidth, float halfHeight);
 	RectF(const Vec2& topleft, float width, float height);
 
-	Vec2& GetCenter()const;
+	Vec2 GetCenter()const;
 	float GetWidth() const;
 	float GetHeight() const;
 	bool isCollidingWith(const RectF& rect)const;
