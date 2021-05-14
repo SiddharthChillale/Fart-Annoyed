@@ -13,7 +13,7 @@ private:
 	Vec2 vel;
 	static constexpr float width = 100.0f;
 	static constexpr float height = 15.0f;
-	
+	static constexpr float speed = 15.0f;
 public:
 	Paddle() = default;
 	Paddle(const Vec2& in_pos);

@@ -5,8 +5,6 @@ Paddle::Paddle(const Vec2& in_pos)
 	:
 	pos(in_pos)
 {
-	
-	
 	vel = Vec2(0.0f, 0.0f);
 }
 
@@ -21,11 +19,11 @@ void Paddle::Update(const Keyboard& kbd, float dt)
 {
 	
 	if (kbd.KeyIsPressed(VK_RIGHT)) {
-		vel.x = 10.0f;
+		vel.x = speed;
 		pos += vel;
 	}
 	if (kbd.KeyIsPressed(VK_LEFT)) {
-		vel.x = -10.0f;
+		vel.x = -speed;
 		pos += vel;
 	}
 	
@@ -64,6 +62,9 @@ bool Paddle::IsCollidingBall(Ball& ball) const
 			ball.ReboundY();
 		}
 		else if (ball.GetCenter().y > pos.y) {
+			ball.ReboundX();
+		}
+		if (ball.GetVelocity().x * vel.x < 0.0f) {
 			ball.ReboundX();
 		}
 		return true;
