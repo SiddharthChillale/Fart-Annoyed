@@ -26,6 +26,7 @@
 #include "Graphics.h"
 #include "FrameTimer.h"
 #include "Paddle.h"
+#include "Brick.h"
 
 class Game
 {
@@ -48,6 +49,7 @@ private:
 	FrameTimer ft;
 	Ball ball;
 	Paddle paddle;
+	Brick brick;
 	bool COLLISION_MASK_ENABLED = false;
 	/********************************/
 };

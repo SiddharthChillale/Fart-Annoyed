@@ -25,6 +25,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
+	brick(Vec2(90.0f, 40.0f), Colors::Green),
 	ball( Vec2(40.0f, 40.0f), Vec2(7.0f, 7.0f)),
 	paddle( Vec2( 30.0f, 500.0f))
 {
@@ -47,7 +48,7 @@ void Game::UpdateModel()
 	paddle.Update(wnd.kbd, dt);
 
 	paddle.IsCollidingBall(ball);
-
+	brick.DoCollisionWithBall(ball);
 	ball.Update(dt);
 	
 	
@@ -55,6 +56,7 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	brick.Draw(gfx);
 	if (COLLISION_MASK_ENABLED) {
 		ball.DrawCollisionMask(gfx);
 
