@@ -16,7 +16,14 @@ void Brick::Draw(Graphics& gfx) const
 
 bool Brick::DoCollisionWithBall(Ball& ball)
 {
-	if (GetRect().isCollidingWith(ball.GetRect())) {
+	if (!destroyed && GetRect().isCollidingWith(ball.GetRect())) {
+		
+		if (GetCenter().y < ball.GetCenter().y) {
+			ball.ReboundY();
+		}
+		else {
+			ball.ReboundX();
+		}
 		destroyed = true;
 		return true;
 	}
@@ -33,4 +40,9 @@ RectF Brick::GetRect() const
 bool Brick::GetDestroyedStatus() const
 {
 	return destroyed;
+}
+
+Vec2 Brick::GetCenter() const
+{
+	return Vec2(pos.x + (width / 2), pos.y + (height / 2));
 }
