@@ -14,14 +14,23 @@ void Brick::Draw(Graphics& gfx) const
 	}
 }
 
-void Brick::DoCollisionWithBall(Ball& ball)
+bool Brick::DoCollisionWithBall(Ball& ball)
 {
 	if (GetRect().isCollidingWith(ball.GetRect())) {
 		destroyed = true;
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 
 RectF Brick::GetRect() const
 {
 	return RectF(pos, Vec2(pos.x+width, pos.y+height));
+}
+
+bool Brick::GetDestroyedStatus() const
+{
+	return destroyed;
 }

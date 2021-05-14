@@ -27,6 +27,7 @@
 #include "FrameTimer.h"
 #include "Paddle.h"
 #include "Brick.h"
+#include "Sound.h"
 
 class Game
 {
@@ -51,7 +52,8 @@ private:
 	Brick brick;
 	Ball ball;
 	Paddle paddle;
-	
+	Sound soundpad;
+	Sound soundbrick;
 	bool COLLISION_MASK_ENABLED = false;
 	/********************************/
 };

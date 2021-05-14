@@ -27,7 +27,9 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd ),
 	brick(Vec2(90.0f, 40.0f), Colors::Green),
 	ball( Vec2(40.0f, 40.0f), Vec2(7.0f, 7.0f)),
-	paddle( Vec2( 30.0f, 500.0f))
+	paddle( Vec2( 30.0f, 500.0f)),
+	soundpad(L"Sounds\\arkpad.wav"),
+	soundbrick(L"Sounds\\arkbrick.wav")
 {
 }
 
@@ -47,8 +49,13 @@ void Game::UpdateModel()
 	}
 	paddle.Update(wnd.kbd, dt);
 
-	paddle.IsCollidingBall(ball);
-	brick.DoCollisionWithBall(ball);
+	if (paddle.IsCollidingBall(ball)) {
+		soundpad.Play();
+	}
+	if (brick.DoCollisionWithBall(ball)) {
+		soundbrick.Play();
+	}
+	
 	ball.Update(dt);
 	
 	
@@ -56,11 +63,14 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	brick.Draw(gfx);
+	if (!brick.GetDestroyedStatus()) {
+		brick.Draw(gfx);
+	}
+	
 	if (COLLISION_MASK_ENABLED) {
 		ball.DrawCollisionMask(gfx);
-
 	}
+
 	ball.Draw(gfx);
 	
 	paddle.Draw(gfx);

@@ -14,7 +14,7 @@ private:
 public:
 	Brick(const Vec2& pos, Color c);
 	void Draw(Graphics& gfx)const;
-	void DoCollisionWithBall(Ball& ball);
+	bool DoCollisionWithBall(Ball& ball);
 	RectF GetRect()const;
-
+	bool GetDestroyedStatus()const;
 };

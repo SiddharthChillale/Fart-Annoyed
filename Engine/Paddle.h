@@ -19,7 +19,7 @@ public:
 	Paddle(const Vec2& in_pos);
 	void BoundInsideWindow();
 	RectF GetRect()const;
-	void IsCollidingBall(Ball& ball)const;
+	bool IsCollidingBall(Ball& ball)const;
 	Vec2 GetCenter()const;
 	void Update(const Keyboard& kbd, float dt);
 	void DrawCollisionMask(Graphics& gfx)const;

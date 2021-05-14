@@ -56,7 +56,7 @@ RectF Paddle::GetRect() const
 	return RectF(pos, Vec2(pos.x + width, pos.y + height));
 }
 
-void Paddle::IsCollidingBall(Ball& ball) const
+bool Paddle::IsCollidingBall(Ball& ball) const
 {
 	
 	if (GetRect().isCollidingWith(ball.GetRect())) {
@@ -66,8 +66,9 @@ void Paddle::IsCollidingBall(Ball& ball) const
 		else if (ball.GetCenter().y > pos.y) {
 			ball.ReboundX();
 		}
+		return true;
 	}
-	
+	return false;
 }
 
 Vec2 Paddle::GetCenter() const
