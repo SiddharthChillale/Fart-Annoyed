@@ -5,8 +5,8 @@ Paddle::Paddle(const Vec2& in_pos)
 	:
 	pos(in_pos)
 {
-	width = 100.0f;
-	height = 30.0f;
+	
+	
 	vel = Vec2(0.0f, 0.0f);
 }
 

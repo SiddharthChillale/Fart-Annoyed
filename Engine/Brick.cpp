@@ -5,9 +5,6 @@ Brick::Brick(const Vec2& in_pos, Color in_c)
 	pos(in_pos),
 	c(in_c)
 {
-	width = 50.0f;
-	height = 20.0f;
-
 }
 
 void Brick::Draw(Graphics& gfx) const

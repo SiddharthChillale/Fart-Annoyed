@@ -47,9 +47,11 @@ private:
 	/********************************/
 	/*  User Variables              */
 	FrameTimer ft;
+	
+	Brick brick;
 	Ball ball;
 	Paddle paddle;
-	Brick brick;
+	
 	bool COLLISION_MASK_ENABLED = false;
 	/********************************/
 };

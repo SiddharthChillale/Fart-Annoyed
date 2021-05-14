@@ -11,8 +11,8 @@ private:
 	Vec2 pos;
 
 	Vec2 vel;
-	float width;
-	float height;
+	static constexpr float width = 100.0f;
+	static constexpr float height = 15.0f;
 	
 public:
 	Paddle() = default;
