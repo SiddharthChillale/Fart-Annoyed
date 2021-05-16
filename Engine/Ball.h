@@ -19,7 +19,8 @@ public:
 	Vec2 GetCenter()const;
 	RectF GetRect()const;
 	Vec2 GetVelocity()const;
-	
+	void SetVelocity(Vec2 in_vel);
+	void SetPosX(float in_x);
 	void ReboundX();
 	void ReboundY();
 	void Update(float dt);

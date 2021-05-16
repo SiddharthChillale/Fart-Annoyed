@@ -26,12 +26,14 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball(Vec2(40.0f, 400.0f), Vec2(7.0f, 7.0f)),
 	paddle( Vec2( 30.0f, 500.0f)),
 	soundpad(L"Sounds\\arkpad.wav"),
 	soundbrick(L"Sounds\\arkbrick.wav")
 {
 	const Color colors[7] = { Colors::Red, Colors::Green, Colors::Magenta, Colors::Cyan, Colors::Yellow, Colors::White, Colors::Blue };
+	Vec2 ballpos = Vec2(paddle.GetCenter().x - ball.GetRect().GetWidth()/2, paddle.GetCenter().y - paddle.GetRect().GetHeight() - ball.GetRect().GetHeight());
+
+	ball = Ball(ballpos, Vec2(0.0f, 0.0f));
 
 	const Vec2 topleft = { 100.0f, 50.0f };
 	const int padding = 3;
@@ -54,6 +56,19 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
+
+	if (isStarted) {
+
+		if (nDestroyedBricks == nBricks) {
+			allBricksBroken = true;
+			paddle.StopAll();
+			ball.StopAll();
+		}
+		else {
+			paddle.Update(wnd.kbd, dt);
+			ball.Update(dt);
+		}
+
 		if (wnd.kbd.KeyIsPressed(VK_CONTROL)) {
 			COLLISION_MASK_ENABLED = !COLLISION_MASK_ENABLED;
 		}
@@ -66,22 +81,22 @@ void Game::UpdateModel()
 				if (bricks[i][j].DoCollisionWithBall(ball)) {
 					soundbrick.Play();
 					nDestroyedBricks++;
-					
+
 				}
 			}
 		}
-
+	}
+	else {
+		ball.SetPosX(paddle.GetCenter().x - ball.GetRect().GetWidth() / 2);
+		paddle.Update(wnd.kbd, dt);
+		if (wnd.kbd.KeyIsPressed(VK_SPACE)) {
+			ball.SetVelocity(Vec2((std::signbit(paddle.GetVelocity().x) - 0.5f) * -14.0f, -7.0f));
+			isStarted = true;
+		}
+	}
 		
-		if (nDestroyedBricks == nBricks) {
-			allBricksBroken = true;
-			paddle.StopAll();
-			ball.StopAll();
-		}
-		else {
-			paddle.Update(wnd.kbd, dt);
-			ball.Update(dt);
-		}
-		}
+		
+	}
 
 void Game::ComposeFrame()
 {

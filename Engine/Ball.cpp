@@ -77,3 +77,13 @@ Vec2 Ball::GetVelocity()const
 {
 	return vel;
 }
+
+void Ball::SetVelocity(Vec2 in_vel)
+{
+	vel = in_vel;
+}
+
+void Ball::SetPosX(float in_x)
+{
+	pos.x = in_x;
+}

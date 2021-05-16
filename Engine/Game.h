@@ -53,6 +53,7 @@ private:
 	static constexpr int nBricksDown = 5;
 	bool gameIsOver = false;
 	bool allBricksBroken = false;
+	bool isStarted = false;
 	int nDestroyedBricks = 0;
 	static constexpr int nBricks = nBricksAcross*nBricksDown;
 	int nLives = 3;

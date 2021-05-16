@@ -15,6 +15,11 @@ void Paddle::Draw(Graphics& gfx) const
 	gfx.DrawRect( rect_paddle , Colors::Red);
 }
 
+Vec2 Paddle::GetVelocity() const
+{
+	return vel;
+}
+
 void Paddle::Update(const Keyboard& kbd, float dt)
 {
 	

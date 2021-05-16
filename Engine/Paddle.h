@@ -25,7 +25,7 @@ public:
 	void StopAll();
 	void DrawCollisionMask(Graphics& gfx)const;
 	void Draw(Graphics& gfx)const;
-	
+	Vec2 GetVelocity()const;
 	
 
 };
