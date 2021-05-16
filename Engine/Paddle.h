@@ -22,6 +22,7 @@ public:
 	bool IsCollidingBall(Ball& ball)const;
 	Vec2 GetCenter()const;
 	void Update(const Keyboard& kbd, float dt);
+	void StopAll();
 	void DrawCollisionMask(Graphics& gfx)const;
 	void Draw(Graphics& gfx)const;
 	

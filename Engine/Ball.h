@@ -14,6 +14,7 @@ private:
 public:
 	Ball() = default;
 	Ball(Vec2& in_pos, Vec2& in_vel);
+	void StopAll();
 	void BoundInsideWindow();
 	Vec2 GetCenter()const;
 	RectF GetRect()const;

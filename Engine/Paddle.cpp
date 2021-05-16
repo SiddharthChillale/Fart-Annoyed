@@ -30,6 +30,11 @@ void Paddle::Update(const Keyboard& kbd, float dt)
 	BoundInsideWindow();
 }
 
+void Paddle::StopAll()
+{
+	vel = Vec2(0.0f,0.0f);
+}
+
 void Paddle::DrawCollisionMask(Graphics& gfx) const
 {
 	RectF collision_mask = GetRect();

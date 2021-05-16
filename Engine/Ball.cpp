@@ -15,6 +15,10 @@ void Ball::Draw(Graphics& gfx) const
 	SpriteCodex::DrawBall( center ,gfx);
 }
 
+void Ball::StopAll()
+{
+	vel = Vec2(0.0f, 0.0f);
+}
 void Ball::BoundInsideWindow()
 {
 	if (pos.x < 0) {

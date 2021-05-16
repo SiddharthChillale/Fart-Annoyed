@@ -51,8 +51,12 @@ private:
 	
 	static constexpr int nBricksAcross = 7;
 	static constexpr int nBricksDown = 5;
-
+	bool gameIsOver = false;
+	bool allBricksBroken = false;
+	int nDestroyedBricks = 0;
 	static constexpr int nBricks = nBricksAcross*nBricksDown;
+	int nLives = 3;
+	
 	Brick bricks[nBricksAcross][nBricksDown];
 	Ball ball;
 	Paddle paddle;
