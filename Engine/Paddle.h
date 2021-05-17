@@ -15,6 +15,8 @@ private:
 	static constexpr float height = 15.0f;
 	static constexpr float speed = 15.0f;
 public:
+	static constexpr float WIDTH = 100.0f;
+	static constexpr float HEIGHT = 15.0f;
 	Paddle() = default;
 	Paddle(const Vec2& in_pos, const RectF& wall);
 	void BoundInsideWindow();

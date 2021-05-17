@@ -49,20 +49,24 @@ private:
 	/*  User Variables              */
 	FrameTimer ft;
 	
-	static constexpr int nBricksAcross = 7;
-	static constexpr int nBricksDown = 5;
 	bool gameIsOver = false;
 	bool touchedFloor = false;
 	bool allBricksBroken = false;
 	bool isStarted = false;
 	int nDestroyedBricks = 0;
-	static constexpr int nBricks = nBricksAcross*nBricksDown;
 	int nLives = 3;
 	
 	RectF wall;
+	static constexpr float wall_thickness = 10;
+	static constexpr int wall_left_offset = 150;
+	static constexpr int nBricksAcross = (Graphics::ScreenWidth - 2* (wall_left_offset + wall_thickness)) / (Brick::WIDTH + 3);
+	static constexpr int nBricksDown = 5;
+	static constexpr int nBricks = nBricksAcross*nBricksDown;
+
 	Brick bricks[nBricksAcross][nBricksDown];
 	Ball ball;
 	Paddle paddle;
+	
 	Sound soundpad;
 	Sound soundbrick;
 	bool COLLISION_MASK_ENABLED = false;

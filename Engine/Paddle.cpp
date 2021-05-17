@@ -23,7 +23,7 @@ Vec2 Paddle::GetVelocity() const
 
 void Paddle::Reset(Ball& ball)
 {
-	pos = Vec2(30.0f, 500.0f);
+	pos = Vec2(wall.GetCenter().x - (width/2), 500.0f);
 	ball.ResetPosition(GetCenter());
 }
 
@@ -63,12 +63,12 @@ void Paddle::DrawCollisionMask(Graphics& gfx) const
 
 void Paddle::BoundInsideWindow()
 {
-	if (pos.x < wall.left) {
-		pos.x = wall.left;
+	if (pos.x < wall.left + 10) {
+		pos.x = wall.left + 10 ;
 		vel.x = -vel.x;
 	}
-	if (pos.x + width > wall.right) {
-		pos.x = (wall.right - width ) - 1;
+	if (pos.x + width > wall.right - 10) {
+		pos.x = (wall.right - 10 - width ) - 1;
 		vel.x = -vel.x;
 	}
 

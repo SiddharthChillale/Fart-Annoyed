@@ -1,4 +1,5 @@
 #include "SpriteCodex.h"
+#include <assert.h>
 
 void SpriteCodex::DrawBall( const Vec2& center,Graphics& gfx )
 {
@@ -2247,16 +2248,35 @@ void SpriteCodex::DrawGameOver(int x, int y, Graphics& gfx)
 	gfx.PutPixel(83 + x, 63 + y, 0, 146, 14);
 }
 
-void SpriteCodex::DrawBorder(int x_thickness, int y_thickness, Graphics& gfx)
+void SpriteCodex::DrawBorder(const RectF& rect, float thickness, Graphics& gfx)
 {
-	RectF Rect0 = RectF(0, x_thickness, 0, Graphics::ScreenHeight);
-	RectF Rect1 = RectF(Graphics::ScreenWidth - x_thickness, Graphics::ScreenWidth, 0, Graphics::ScreenHeight);
-	RectF Rect2 = RectF(0, Graphics::ScreenWidth, 0, y_thickness);
-	RectF Rect3 = RectF(0, Graphics::ScreenWidth, (Graphics::ScreenHeight  - 1) - y_thickness, Graphics::ScreenHeight);
+	
+	assert(rect.left >= 0);
+	assert(rect.right < Graphics::ScreenWidth);
+	assert(rect.top >= 0);
+	assert(rect.bottom < Graphics::ScreenHeight);
 
-	gfx.DrawRect(Rect0, Colors::Blue);
-	gfx.DrawRect(Rect1, Colors::Blue);
-	gfx.DrawRect(Rect2, Colors::Blue);
-	gfx.DrawRect(Rect3, Colors::Blue);
+
+	RectF Rect0 = RectF(rect.left, rect.left + thickness/2.0f, rect.top, rect.bottom);
+	RectF Rect1 = RectF(rect.right - thickness / 2.0f, rect.right, rect.top, rect.bottom);
+	RectF Rect2 = RectF(rect.left, rect.right, rect.top, rect.top + thickness / 2.0f);
+	RectF Rect3 = RectF(rect.left, rect.right, rect.bottom - thickness / 2.0f, rect.bottom);
+
+
+	RectF Rect01 = RectF(rect.left + thickness / 2.0f, rect.left + thickness, rect.top, rect.bottom);
+	RectF Rect11 = RectF(rect.right - thickness, rect.right - thickness / 2.0f, rect.top, rect.bottom);
+	RectF Rect21 = RectF(rect.left, rect.right, rect.top + thickness / 2.0f, rect.top + thickness);
+	RectF Rect31 = RectF(rect.left, rect.right, rect.bottom - thickness, rect.bottom - thickness / 2.0f);
+
+	
+	gfx.DrawRect(Rect01, Colors::LightGray);
+	gfx.DrawRect(Rect11, Colors::LightGray);
+	gfx.DrawRect(Rect21, Colors::LightGray);
+	gfx.DrawRect(Rect31, Colors::LightGray);
+
+	gfx.DrawRect(Rect0, Colors::Gray );
+	gfx.DrawRect(Rect1, Colors::Gray);
+	gfx.DrawRect(Rect2, Colors::Gray);
+	gfx.DrawRect(Rect3, Colors::Gray);
 
 }

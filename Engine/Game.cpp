@@ -26,8 +26,8 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	wall(10, Graphics::ScreenWidth-10,10, Graphics::ScreenHeight-10 ),
-	paddle( Vec2( 30.0f, 500.0f), wall),
+	wall(wall_left_offset, Graphics::ScreenWidth- wall_left_offset,10, Graphics::ScreenHeight-10 ),
+	paddle( Vec2(wall.GetCenter().x - (Paddle::WIDTH / 2), 500.0f), wall),
 	soundpad(L"Sounds\\arkpad.wav"),
 	soundbrick(L"Sounds\\arkbrick.wav")
 {
@@ -36,12 +36,14 @@ Game::Game( MainWindow& wnd )
 
 	ball = Ball(ballpos, Vec2(0.0f, 0.0f), wall);
 
-	const Vec2 topleft = { 100.0f, 50.0f };
-	const int padding = 3;
+	int x_alignment_space = ((wall.GetWidth() - 2 * wall_thickness) - (nBricksAcross * (Brick::WIDTH + 3))) / 2;
+	const Vec2 topleft = { wall.left + wall_thickness + x_alignment_space, 50.0f };
+	const int brick_padding = 3;
+
 	for (int i = 0; i < nBricksAcross; i++) {
 		Color brick_color = colors[i];
 		for (int j = 0; j < nBricksDown; j++) {
-			bricks[i][j] = Brick(topleft + Vec2(i*(Brick::WIDTH + padding), j*(Brick::HEIGHT + padding)), brick_color);
+			bricks[i][j] = Brick(topleft + Vec2(i*(Brick::WIDTH + brick_padding), j*(Brick::HEIGHT + brick_padding)), brick_color);
 		}
 	}
 }
@@ -57,89 +59,93 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
+	if (!gameIsOver) {
+		if (isStarted) {
 
-	if (isStarted) {
+			if (nDestroyedBricks == nBricks) {
+				allBricksBroken = true;
+				paddle.StopAll();
+				ball.StopAll();
+			}
+			else {
+				paddle.Update(wnd.kbd, dt, false, ball);
 
-		if (nDestroyedBricks == nBricks) {
-			allBricksBroken = true;
-			paddle.StopAll();
-			ball.StopAll();
-		}
-		else {
-			paddle.Update(wnd.kbd, dt, false, ball);
-			
-			touchedFloor = ball.Update(dt);
-			if (touchedFloor) {
-				nLives -=1 ;
-				paddle.Reset(ball);
-				isStarted = false;
-				// add ball respawn
-				if (nLives == 0) {
-					gameIsOver = true;
+				touchedFloor = ball.Update(dt);
+				if (touchedFloor) {
+					nLives -= 1;
+					paddle.Reset(ball);
+					isStarted = false;
+					
+					if (nLives == 0) {
+						gameIsOver = true;
+					}
+				}
+			}
+
+			if (wnd.kbd.KeyIsPressed(VK_CONTROL)) {
+				COLLISION_MASK_ENABLED = !COLLISION_MASK_ENABLED;
+			}
+
+			if (paddle.IsCollidingBall(ball)) {
+				soundpad.Play();
+			}
+			for (int i = 0; i < nBricksAcross; i++) {
+				for (int j = 0; j < nBricksDown; j++) {
+					if (bricks[i][j].DoCollisionWithBall(ball)) {
+						soundbrick.Play();
+						nDestroyedBricks++;
+
+					}
 				}
 			}
 		}
+		else {
 
-		if (wnd.kbd.KeyIsPressed(VK_CONTROL)) {
-			COLLISION_MASK_ENABLED = !COLLISION_MASK_ENABLED;
-		}
+			paddle.Update(wnd.kbd, dt, true, ball);
 
-		if (paddle.IsCollidingBall(ball)) {
-			soundpad.Play();
-		}
-		for (int i = 0; i < nBricksAcross; i++) {
-			for (int j = 0; j < nBricksDown; j++) {
-				if (bricks[i][j].DoCollisionWithBall(ball)) {
-					soundbrick.Play();
-					nDestroyedBricks++;
-
-				}
+			if (wnd.kbd.KeyIsPressed(VK_SPACE)) {
+				ball.Start();
+				isStarted = true;
 			}
 		}
 	}
 	else {
-		
-		paddle.Update(wnd.kbd, dt, true, ball);
-
-		if (wnd.kbd.KeyIsPressed(VK_SPACE)) {
-			ball.Start();
-			isStarted = true;
-		}
+		paddle.StopAll();
+		ball.StopAll();
 	}
-		
 		
 	}
 
 void Game::ComposeFrame()
 {
-	SpriteCodex::DrawBorder(10, 10, gfx);
+	SpriteCodex::DrawBorder(wall, 10, gfx);
+
+	for (int i = 0; i < nBricksAcross; i++) {
+		for (int j = 0; j < nBricksDown; j++) {
+			if (!bricks[i][j].GetDestroyedStatus()) {
+				bricks[i][j].Draw(gfx);
+			}
+
+		}
+	}
 
 	if (!gameIsOver) {
-
-		for (int i = 0; i < nBricksAcross; i++) {
-			for (int j = 0; j < nBricksDown; j++) {
-				if (!bricks[i][j].GetDestroyedStatus()) {
-					bricks[i][j].Draw(gfx);
-				}
-				
-			}
-		}
-
 		if (COLLISION_MASK_ENABLED) {
 			ball.DrawCollisionMask(gfx);
 		}
 
 		ball.Draw(gfx);
-
 		paddle.Draw(gfx);
+
+
 		if (COLLISION_MASK_ENABLED) {
 			paddle.DrawCollisionMask(gfx);
 
 		}
 	}
-	else {
-		
+	else {		
 		SpriteCodex::DrawGameOver(Graphics::ScreenWidth / 2, Graphics::ScreenHeight / 2, gfx);
+		
 	}
 	if (allBricksBroken) {
 		// need to show a different screen when all bricks are broken
