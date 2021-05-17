@@ -54,6 +54,7 @@ void Ball::ReboundY()
 
 bool Ball::Update(float dt)
 {
+	
 	pos += vel * dt * 60;
 	return BoundInsideWindow();
 	
@@ -81,12 +82,15 @@ Vec2 Ball::GetVelocity()const
 	return vel;
 }
 
-void Ball::SetVelocity(Vec2 in_vel)
+
+void Ball::Start()
 {
-	vel = in_vel;
+	vel = Vec2( 7.0f ,-7.0f);
 }
 
-void Ball::SetPosX(float in_x)
+
+void Ball::ResetPosition(const Vec2& paddle_center_pos)
 {
-	pos.x = in_x;
+	pos.x = paddle_center_pos.x - width / 2;
+	pos.y = paddle_center_pos.y - 2* height;
 }

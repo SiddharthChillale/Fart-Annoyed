@@ -19,8 +19,9 @@ public:
 	Vec2 GetCenter()const;
 	RectF GetRect()const;
 	Vec2 GetVelocity()const;
-	void SetVelocity(Vec2 in_vel);
-	void SetPosX(float in_x);
+	
+	void Start();
+	void ResetPosition(const Vec2& paddle_center_pos);
 	void ReboundX();
 	void ReboundY();
 	bool Update(float dt);

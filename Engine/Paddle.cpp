@@ -20,9 +20,18 @@ Vec2 Paddle::GetVelocity() const
 	return vel;
 }
 
-void Paddle::Update(const Keyboard& kbd, float dt)
+void Paddle::Reset(Ball& ball)
 {
-	
+	pos = Vec2(30.0f, 500.0f);
+	ball.ResetPosition(GetCenter());
+}
+
+void Paddle::Update(const Keyboard& kbd, float dt, bool ballIsAttached, Ball& ball)
+{
+	if (ballIsAttached) {
+		UpdateBall(ball);
+	}
+
 	if (kbd.KeyIsPressed(VK_RIGHT)) {
 		vel.x = speed;
 		pos += vel;
@@ -33,6 +42,11 @@ void Paddle::Update(const Keyboard& kbd, float dt)
 	}
 	
 	BoundInsideWindow();
+}
+
+void Paddle::UpdateBall(Ball& ball) const
+{
+	ball.ResetPosition(GetCenter());
 }
 
 void Paddle::StopAll()

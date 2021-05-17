@@ -65,12 +65,17 @@ void Game::UpdateModel()
 			ball.StopAll();
 		}
 		else {
-			paddle.Update(wnd.kbd, dt);
-			gameIsOver = ball.Update(dt);
-			// touchedFloor = ball.Update(dt);
+			paddle.Update(wnd.kbd, dt, false, ball);
+			
+			touchedFloor = ball.Update(dt);
 			if (touchedFloor) {
 				nLives -=1 ;
+				paddle.Reset(ball);
+				isStarted = false;
 				// add ball respawn
+				if (nLives == 0) {
+					gameIsOver = true;
+				}
 			}
 		}
 
@@ -92,10 +97,11 @@ void Game::UpdateModel()
 		}
 	}
 	else {
-		ball.SetPosX(paddle.GetCenter().x - ball.GetRect().GetWidth() / 2);
-		paddle.Update(wnd.kbd, dt);
+		
+		paddle.Update(wnd.kbd, dt, true, ball);
+
 		if (wnd.kbd.KeyIsPressed(VK_SPACE)) {
-			ball.SetVelocity(Vec2((std::signbit(paddle.GetVelocity().x) - 0.5f) * -14.0f, -7.0f));
+			ball.Start();
 			isStarted = true;
 		}
 	}
