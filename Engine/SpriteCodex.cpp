@@ -2246,3 +2246,17 @@ void SpriteCodex::DrawGameOver(int x, int y, Graphics& gfx)
 	gfx.PutPixel(82 + x, 63 + y, 0, 146, 14);
 	gfx.PutPixel(83 + x, 63 + y, 0, 146, 14);
 }
+
+void SpriteCodex::DrawBorder(int x_thickness, int y_thickness, Graphics& gfx)
+{
+	RectF Rect0 = RectF(0, x_thickness, 0, Graphics::ScreenHeight);
+	RectF Rect1 = RectF(Graphics::ScreenWidth - x_thickness, Graphics::ScreenWidth, 0, Graphics::ScreenHeight);
+	RectF Rect2 = RectF(0, Graphics::ScreenWidth, 0, y_thickness);
+	RectF Rect3 = RectF(0, Graphics::ScreenWidth, (Graphics::ScreenHeight  - 1) - y_thickness, Graphics::ScreenHeight);
+
+	gfx.DrawRect(Rect0, Colors::Blue);
+	gfx.DrawRect(Rect1, Colors::Blue);
+	gfx.DrawRect(Rect2, Colors::Blue);
+	gfx.DrawRect(Rect3, Colors::Blue);
+
+}

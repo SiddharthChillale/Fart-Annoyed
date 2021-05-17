@@ -112,6 +112,8 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	SpriteCodex::DrawBorder(10, 10, gfx);
+
 	if (!gameIsOver) {
 
 		for (int i = 0; i < nBricksAcross; i++) {
