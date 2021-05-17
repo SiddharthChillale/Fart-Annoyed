@@ -66,7 +66,12 @@ void Game::UpdateModel()
 		}
 		else {
 			paddle.Update(wnd.kbd, dt);
-			ball.Update(dt);
+			gameIsOver = ball.Update(dt);
+			// touchedFloor = ball.Update(dt);
+			if (touchedFloor) {
+				nLives -=1 ;
+				// add ball respawn
+			}
 		}
 
 		if (wnd.kbd.KeyIsPressed(VK_CONTROL)) {

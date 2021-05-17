@@ -15,7 +15,7 @@ public:
 	Ball() = default;
 	Ball(Vec2& in_pos, Vec2& in_vel);
 	void StopAll();
-	void BoundInsideWindow();
+	bool BoundInsideWindow();
 	Vec2 GetCenter()const;
 	RectF GetRect()const;
 	Vec2 GetVelocity()const;
@@ -23,7 +23,7 @@ public:
 	void SetPosX(float in_x);
 	void ReboundX();
 	void ReboundY();
-	void Update(float dt);
+	bool Update(float dt);
 	void DrawCollisionMask(Graphics& gfx)const;
 	void Draw(Graphics& gfx)const;
 

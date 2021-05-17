@@ -19,7 +19,7 @@ void Ball::StopAll()
 {
 	vel = Vec2(0.0f, 0.0f);
 }
-void Ball::BoundInsideWindow()
+bool Ball::BoundInsideWindow()
 {
 	if (pos.x < 0) {
 		pos.x = 0.0f;
@@ -32,11 +32,13 @@ void Ball::BoundInsideWindow()
 	if (pos.y < 0) {
 		pos.y = 0.0f;
 		ReboundY();
+		
 	}
 	if (pos.y + height > Graphics::ScreenHeight) {
 		pos.y = (Graphics::ScreenHeight-1) - height;
-		ReboundY();
+		return true;
 	}
+	return false;
 }
 
 
@@ -50,10 +52,11 @@ void Ball::ReboundY()
 	vel.y = -vel.y;
 }
 
-void Ball::Update(float dt)
+bool Ball::Update(float dt)
 {
 	pos += vel * dt * 60;
-	BoundInsideWindow();
+	return BoundInsideWindow();
+	
 
 }
 
