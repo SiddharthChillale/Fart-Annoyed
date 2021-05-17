@@ -8,12 +8,13 @@ class Ball {
 private:
 	Vec2 pos;
 	Vec2 vel;
-	float width = 14.0f;
-	float height = 14.0f;
+	RectF wall;
+	static constexpr float width = 14.0f;
+	static constexpr float height = 14.0f;
 	
 public:
 	Ball() = default;
-	Ball(Vec2& in_pos, Vec2& in_vel);
+	Ball(Vec2& in_pos, Vec2& in_vel, const RectF& wall);
 	void StopAll();
 	bool BoundInsideWindow();
 	Vec2 GetCenter()const;

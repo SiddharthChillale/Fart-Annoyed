@@ -1,9 +1,10 @@
 #include "Paddle.h"
 
 
-Paddle::Paddle(const Vec2& in_pos)
+Paddle::Paddle(const Vec2& in_pos, const RectF& wall)
 	:
-	pos(in_pos)
+	pos(in_pos),
+	wall(wall)
 {
 	vel = Vec2(0.0f, 0.0f);
 }
@@ -62,12 +63,12 @@ void Paddle::DrawCollisionMask(Graphics& gfx) const
 
 void Paddle::BoundInsideWindow()
 {
-	if (pos.x < 0) {
-		pos.x = 0.0f;
+	if (pos.x < wall.left) {
+		pos.x = wall.left;
 		vel.x = -vel.x;
 	}
-	if (pos.x + width > Graphics::ScreenWidth) {
-		pos.x = (Graphics::ScreenWidth - width ) - 1;
+	if (pos.x + width > wall.right) {
+		pos.x = (wall.right - width ) - 1;
 		vel.x = -vel.x;
 	}
 

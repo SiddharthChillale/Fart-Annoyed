@@ -2,10 +2,11 @@
 #include "SpriteCodex.h"
 
 
-Ball::Ball(Vec2& in_pos, Vec2& in_vel)
+Ball::Ball(Vec2& in_pos, Vec2& in_vel, const RectF& in_wall)
 	:
 	pos(in_pos),
-	vel(in_vel)
+	vel(in_vel),
+	wall(in_wall)
 {
 }
 
@@ -21,21 +22,21 @@ void Ball::StopAll()
 }
 bool Ball::BoundInsideWindow()
 {
-	if (pos.x < 0) {
-		pos.x = 0.0f;
+	if (pos.x < wall.left) {
+		pos.x = wall.left;
 		ReboundX();
 	}
-	if (pos.x +width > Graphics::ScreenWidth) {
-		pos.x = (Graphics::ScreenWidth-1) - width;
+	if (pos.x +width > wall.right) {
+		pos.x = (wall.right - 1) - width;
 		ReboundX();
 	}
-	if (pos.y < 0) {
-		pos.y = 0.0f;
+	if (pos.y < wall.top) {
+		pos.y = wall.top;
 		ReboundY();
 		
 	}
-	if (pos.y + height > Graphics::ScreenHeight) {
-		pos.y = (Graphics::ScreenHeight-1) - height;
+	if (pos.y + height > wall.bottom) {
+		pos.y = (wall.bottom-1) - height;
 		return true;
 	}
 	return false;
@@ -54,11 +55,9 @@ void Ball::ReboundY()
 
 bool Ball::Update(float dt)
 {
-	
 	pos += vel * dt * 60;
 	return BoundInsideWindow();
 	
-
 }
 
 void Ball::DrawCollisionMask(Graphics& gfx) const

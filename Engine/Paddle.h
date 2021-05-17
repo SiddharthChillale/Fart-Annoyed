@@ -9,14 +9,14 @@
 class Paddle {
 private:
 	Vec2 pos;
-
+	RectF wall;
 	Vec2 vel;
 	static constexpr float width = 100.0f;
 	static constexpr float height = 15.0f;
 	static constexpr float speed = 15.0f;
 public:
 	Paddle() = default;
-	Paddle(const Vec2& in_pos);
+	Paddle(const Vec2& in_pos, const RectF& wall);
 	void BoundInsideWindow();
 	RectF GetRect()const;
 	bool IsCollidingBall(Ball& ball)const;

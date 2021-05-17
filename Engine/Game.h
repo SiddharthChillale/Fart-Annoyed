@@ -59,6 +59,7 @@ private:
 	static constexpr int nBricks = nBricksAcross*nBricksDown;
 	int nLives = 3;
 	
+	RectF wall;
 	Brick bricks[nBricksAcross][nBricksDown];
 	Ball ball;
 	Paddle paddle;

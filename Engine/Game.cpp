@@ -26,14 +26,15 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	paddle( Vec2( 30.0f, 500.0f)),
+	wall(10, Graphics::ScreenWidth-10,10, Graphics::ScreenHeight-10 ),
+	paddle( Vec2( 30.0f, 500.0f), wall),
 	soundpad(L"Sounds\\arkpad.wav"),
 	soundbrick(L"Sounds\\arkbrick.wav")
 {
 	const Color colors[7] = { Colors::Red, Colors::Green, Colors::Magenta, Colors::Cyan, Colors::Yellow, Colors::White, Colors::Blue };
 	Vec2 ballpos = Vec2(paddle.GetCenter().x - ball.GetRect().GetWidth()/2, paddle.GetCenter().y - paddle.GetRect().GetHeight() - ball.GetRect().GetHeight());
 
-	ball = Ball(ballpos, Vec2(0.0f, 0.0f));
+	ball = Ball(ballpos, Vec2(0.0f, 0.0f), wall);
 
 	const Vec2 topleft = { 100.0f, 50.0f };
 	const int padding = 3;
